@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/product', function () {
+    return view('product');
+});
 
 Route::middleware([
     'auth:sanctum',
@@ -27,7 +30,7 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/products', function () {
-        return view('livewire.products');
+        return view('admin.products');
     })->name('products');
 
 

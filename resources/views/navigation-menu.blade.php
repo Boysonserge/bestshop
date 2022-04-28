@@ -19,7 +19,7 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
-                        {{ __('Products') }}
+                        {{ __('Product') }}
                     </x-jet-nav-link>
                 </div>
             </div>

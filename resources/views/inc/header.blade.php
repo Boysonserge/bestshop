@@ -31,24 +31,19 @@
                 </p>
             </div>
 
-            <div class="header-top-actions">
+{{--            <div class="header-top-actions">--}}
 
-                <select name="currency">
+{{--                --}}
 
-                    <option value="rwf">RWF</option>
-                    <option value="usd">USD</option>
-
-                </select>
-
-                <select name="language">
+{{--                <select name="language">--}}
 
 
-                    <option value="es-kiny">Kinyarwanda</option>
-                    <option value="en-US">English</option>
+{{--                    <option value="es-kiny">Kinyarwanda</option>--}}
+{{--                    <option value="en-US">English</option>--}}
 
-                </select>
+{{--                </select>--}}
 
-            </div>
+{{--            </div>--}}
 
         </div>
 
@@ -82,7 +77,7 @@
 
                 <button class="action-btn">
                     <ion-icon name="cart"></ion-icon>
-                    <span class="count">0</span>
+                    <span class="count">{{0}}</span>
                 </button>
 
             </div>
