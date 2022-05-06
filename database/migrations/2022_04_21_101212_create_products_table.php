@@ -21,8 +21,7 @@ class CreateProductsTable extends Migration
             $table->text('productDescription')->nullable();
             $table->string('productCategory')->nullable();
             $table->string('productImage')->nullable();
-            $table->string('productOtherImage')->nullable();
-            $table->string('productVideo')->nullable();
+            $table->text('productVideo')->nullable();
 
 
             $table->softDeletes();

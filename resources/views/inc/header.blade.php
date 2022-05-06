@@ -53,8 +53,8 @@
 
         <div class="container">
 
-            <a href="" class="header-logo">
-                <img style="width: 100%;display: block;" src="{{ asset('images/logo/logo.svg') }}" alt="Best shop logo" width="150" height="76">
+            <a href="{{route('home')}}" class="header-logo">
+                <img style="width: 40%;display: block;" src="{{ asset('images/logo/logo-01.png') }}" alt="Best shop logo" width="150" height="76">
             </a>
 
             <div class="header-search-container">
@@ -68,17 +68,16 @@
             </div>
 
             <div class="header-user-actions">
-
                 <button class="action-btn">
                     <ion-icon name="person-circle"></ion-icon>
                 </button>
 
 
 
-                <button class="action-btn">
+                <a href="{{route('cart.fetch')}}" class="action-btn">
                     <ion-icon name="cart"></ion-icon>
-                    <span class="count">{{0}}</span>
-                </button>
+                    <span class="count">{{\Gloudemans\Shoppingcart\Facades\Cart::content()->count()}}</span>
+                </a>
 
             </div>
 
@@ -93,13 +92,13 @@
             <ul class="desktop-menu-category-list">
 
                 <li class="menu-category">
-                    <a href="#" class="menu-title">Home</a>
+                    <a href="{{route('home')}}" class="menu-title">Home</a>
                 </li>
 
 
 
                 <li class="menu-category">
-                    <a href="#" class="menu-title">Kitchen materials</a>
+                    <a href="" class="menu-title">Kitchen materials</a>
 
                 </li>
 
@@ -195,21 +194,16 @@
             <ion-icon name="menu-outline"></ion-icon>
         </button>
 
-        <button class="action-btn">
-            <ion-icon name="bag-handle-outline"></ion-icon>
-
-            <span class="count">0</span>
-        </button>
+        <a href="{{route('cart.fetch')}}" class="action-btn">
+            <ion-icon name="cart"></ion-icon>
+            <span class="count">{{\Gloudemans\Shoppingcart\Facades\Cart::content()->count()}}</span>
+        </a>
 
         <button class="action-btn">
             <ion-icon name="home-outline"></ion-icon>
         </button>
 
-        <button class="action-btn">
-            <ion-icon name="heart-outline"></ion-icon>
 
-            <span class="count">0</span>
-        </button>
 
         <button class="action-btn" data-mobile-menu-open-btn>
             <ion-icon name="grid-outline"></ion-icon>
@@ -236,8 +230,7 @@
             <li class="menu-category">
 
                 <button class="accordion-menu" data-accordion-btn>
-                    <p class="menu-title">Men's</p>
-
+                    <p class="menu-title">Kitchen materials</p>
                     <div>
                         <ion-icon name="add-outline" class="add-icon"></ion-icon>
                         <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
@@ -247,19 +240,7 @@
                 <ul class="submenu-category-list" data-accordion>
 
                     <li class="submenu-category">
-                        <a href="#" class="submenu-title">Shirt</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Shorts & Jeans</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Safety Shoes</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Wallet</a>
+                        <a href="#" class="submenu-title">View all</a>
                     </li>
 
                 </ul>
@@ -269,7 +250,26 @@
             <li class="menu-category">
 
                 <button class="accordion-menu" data-accordion-btn>
-                    <p class="menu-title">Women's</p>
+                    <p class="menu-title">Coffee materials</p>
+
+                    <div>
+                        <ion-icon name="add-outline" class="add-icon"></ion-icon>
+                        <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                    </div>
+                </button>
+
+                <ul class="submenu-category-list" data-accordion>
+                    <li class="submenu-category">
+                        <a href="#" class="submenu-title">View all</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="menu-category">
+
+                <button class="accordion-menu" data-accordion-btn>
+                    <p class="menu-title">Butchery
+                        </p>
 
                     <div>
                         <ion-icon name="add-outline" class="add-icon"></ion-icon>
@@ -280,19 +280,7 @@
                 <ul class="submenu-category-list" data-accordion>
 
                     <li class="submenu-category">
-                        <a href="#" class="submenu-title">Dress & Frock</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Earrings</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Necklace</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Makeup Kit</a>
+                        <a href="#" class="submenu-title">View all</a>
                     </li>
 
                 </ul>
@@ -302,7 +290,8 @@
             <li class="menu-category">
 
                 <button class="accordion-menu" data-accordion-btn>
-                    <p class="menu-title">Jewelry</p>
+                    <p class="menu-title">Bakery
+                        </p>
 
                     <div>
                         <ion-icon name="add-outline" class="add-icon"></ion-icon>
@@ -313,119 +302,15 @@
                 <ul class="submenu-category-list" data-accordion>
 
                     <li class="submenu-category">
-                        <a href="#" class="submenu-title">Earrings</a>
+                        <a href="#" class="submenu-title">View all</a>
                     </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Couple Rings</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Necklace</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Bracelets</a>
-                    </li>
-
                 </ul>
-
-            </li>
-
-            <li class="menu-category">
-
-                <button class="accordion-menu" data-accordion-btn>
-                    <p class="menu-title">Perfume</p>
-
-                    <div>
-                        <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                        <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                    </div>
-                </button>
-
-                <ul class="submenu-category-list" data-accordion>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Clothes Perfume</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Deodorant</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Flower Fragrance</a>
-                    </li>
-
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">Air Freshener</a>
-                    </li>
-
-                </ul>
-
-            </li>
-
-            <li class="menu-category">
-                <a href="#" class="menu-title">Blog</a>
-            </li>
-
-            <li class="menu-category">
-                <a href="#" class="menu-title">Hot Offers</a>
             </li>
 
         </ul>
 
         <div class="menu-bottom">
-
-            <ul class="menu-category-list">
-
-                <li class="menu-category">
-
-                    <button class="accordion-menu" data-accordion-btn>
-                        <p class="menu-title">Language</p>
-
-                        <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
-                    </button>
-
-                    <ul class="submenu-category-list" data-accordion>
-
-                        <li class="submenu-category">
-                            <a href="#" class="submenu-title">English</a>
-                        </li>
-
-                        <li class="submenu-category">
-                            <a href="#" class="submenu-title">Espa&ntilde;ol</a>
-                        </li>
-
-                        <li class="submenu-category">
-                            <a href="#" class="submenu-title">Fren&ccedil;h</a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <li class="menu-category">
-                    <button class="accordion-menu" data-accordion-btn>
-                        <p class="menu-title">Currency</p>
-                        <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
-                    </button>
-
-                    <ul class="submenu-category-list" data-accordion>
-                        <li class="submenu-category">
-                            <a href="#" class="submenu-title">USD &dollar;</a>
-                        </li>
-
-                        <li class="submenu-category">
-                            <a href="#" class="submenu-title">EUR &euro;</a>
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
-
             <ul class="menu-social-container">
-
                 <li>
                     <a href="#" class="social-link">
                         <ion-icon name="logo-facebook"></ion-icon>

@@ -10,13 +10,20 @@
     <!--
       - favicon
     -->
-    <link rel="shortcut icon" href="{{asset('images/fav.ico')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}" type="image/x-icon">
 
     <!--
       - custom css link
     -->
     <link rel="stylesheet" href="{{ asset('css/style-prefix.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{asset('css/flowbite.css')}}">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Scripts -->
+
 
     <!--
       - google font link
@@ -34,8 +41,6 @@
 
 <body>
 
-
-
 <div class="overlay" data-overlay></div>
 
 
@@ -44,8 +49,6 @@
 -->
 
 @include('inc.header');
-
-
 
 <!--
   - MAIN
@@ -124,7 +127,6 @@
             </div>
         </div>
     </div>
-
 
     <!--
       - CATEGORY
@@ -224,16 +226,11 @@
 
     </div>
 
-
     <!--
       - PRODUCT
     -->
 
     @livewire('main')
-
-
-
-
 
     <!--
       - TESTIMONIALS, CTA & SERVICE
@@ -272,8 +269,6 @@
 
                 </div>
 
-
-
                 <!--
                   - CTA
                 -->
@@ -295,8 +290,6 @@
                     </a>
 
                 </div>
-
-
 
                 <!--
                   - SERVICE
@@ -393,16 +386,7 @@
 
     </div>
 
-
-
-
-
-
 </main>
-
-
-
-
 
 <!--
   - FOOTER
@@ -410,16 +394,12 @@
 
 @include('inc.footer')
 
-
-
-
-
-
 <!--
   - custom js link
 -->
 <script src="{{asset('js/script.js')}}"></script>
-
+<script src="{{ mix('js/app.js') }}" defer></script>
+<script src="{{asset('js/flowbite.js')}}"></script>
 <!--
   - ionicon link
 -->

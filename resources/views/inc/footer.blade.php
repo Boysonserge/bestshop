@@ -9,23 +9,23 @@
             <ul class="footer-nav-list">
 
                 <li class="footer-nav-item">
-                    <h2 class="nav-title">Popular Categories</h2>
+                    <h2 class="nav-title">Kitchen materials</h2>
                 </li>
 
                 <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Fashion</a>
+                    <a href="#" class="footer-nav-link">Coffee materials</a>
                 </li>
 
                 <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Electronic</a>
+                    <a href="#" class="footer-nav-link">Butchery</a>
                 </li>
 
                 <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Cosmetic</a>
+                    <a href="#" class="footer-nav-link">Bakery</a>
                 </li>
 
                 <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Health</a>
+                    <a href="#" class="footer-nav-link">Coffee materials</a>
                 </li>
 
                 <li class="footer-nav-item">
@@ -37,7 +37,7 @@
             <ul class="footer-nav-list">
 
                 <li class="footer-nav-item">
-                    <h2 class="nav-title">Products</h2>
+                    <h2 class="nav-title">Coffee materials</h2>
                 </li>
 
                 <li class="footer-nav-item">
@@ -65,7 +65,7 @@
             <ul class="footer-nav-list">
 
                 <li class="footer-nav-item">
-                    <h2 class="nav-title">Our Company</h2>
+                    <h2 class="nav-title">Butchery</h2>
                 </li>
 
                 <li class="footer-nav-item">
@@ -93,7 +93,7 @@
             <ul class="footer-nav-list">
 
                 <li class="footer-nav-item">
-                    <h2 class="nav-title">Services</h2>
+                    <h2 class="nav-title">Location</h2>
                 </li>
 
                 <li class="footer-nav-item">
@@ -198,7 +198,7 @@
 
         <div class="container">
 
-            <img src="images/payment.png" alt="payment method" class="payment-img">
+            <img src="{{asset('images/payment.png')}}" alt="payment method" class="payment-img">
 
             <p class="copyright">
                 Copyright &copy; <a href="#">Best shop Ltd Rwanda</a> all rights reserved.
