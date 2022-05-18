@@ -69,7 +69,8 @@
 
             <div class="header-user-actions">
                 <button class="action-btn">
-                    <ion-icon name="person-circle"></ion-icon>
+                    <a href="{{route('client/dashboard')}}"><ion-icon name="person-circle"></ion-icon></a>
+
                 </button>
 
 

@@ -391,6 +391,8 @@
 <!--
   - FOOTER
 -->
+<script src="https://apps.elfsight.com/p/platform.js" defer></script>
+<div class="elfsight-app-82d77462-b66c-4e73-a65c-6a4b5a671b65"></div>
 
 @include('inc.footer')
 

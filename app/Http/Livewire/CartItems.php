@@ -15,11 +15,26 @@ class CartItems extends Component
     public $ProdId;
     public $tax;
     public $quantity;
+    public $price;
+    public $subTotal;
+    public $rowId;
+    public $myCart=[];
+
+
+    public function mount(){
+       $this->cartItems=Cart::content();
+
+    }
+
+    public function updateCart(){
+        Cart::update($this->rowId, $this->quantity);
+    }
 
 
     public function proceed(){
         //$this->redirect('client/dashboard');
         $this->cartItems=Cart::content();
+
         foreach ($this->cartItems as $ct){
             $order=new Order();
             $order->product_id=$ct->id;
@@ -29,28 +44,7 @@ class CartItems extends Component
             $order->sub_total=$ct->total;
             $order->save();
         }
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.mista.io/sms',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array('to' => '+250780331198',
-                'from' => 'bestshoprw',
-                'unicode' => '0',
-                'sms' => 'Hello from Mr SMS',
-                'action' => 'send-sms'),
-            CURLOPT_HTTPHEADER => array(
-                'x-api-key: a2sya21rZ2R1OHJoeXMza3JjdXVpNXRqYzdoOHJnMDk=)'
-            ),
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
-        echo $response;
+
         return redirect('client/dashboard')->with('success','Product ordered successfully');
     }
 

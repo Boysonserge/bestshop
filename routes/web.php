@@ -45,6 +45,13 @@ Route::middleware([
     Route::get('/products', function () {
         return view('admin.products');
     })->name('products');
+
+
+    Route::get('/categories', function () {
+        return view('admin.categories');
+    })->name('categories');
+
+
 });
 
 
@@ -61,7 +68,8 @@ Route::get('cart.fetch',function (){
 Route::get('user/login',[AuthController::class,'loginPage'])->middleware(IsLogged::class);
 Route::get('client/dashboard',function (){
    return view('clientdashboard');
-})->middleware(EnsureValidClient::class);
+})->name('client/dashboard')
+    ->middleware(EnsureValidClient::class);
 
 
 

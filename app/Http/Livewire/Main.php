@@ -8,6 +8,7 @@ use Livewire\Component;
 class Main extends Component
 {
     public $newArrivals,$trending,$topRated,$deal;
+
     public function mount(){
         $this->newArrivals=DB::table('products')
             ->inRandomOrder()

@@ -24,7 +24,6 @@ class LoginSide extends Component
 
         if ($clientCheck && Hash::check($this->password, $clientCheck->password)){
             session()->put('ClientInfo',$clientCheck);
-            return Redirect::intended('client/dashboard');
         }else{
             back()->with('fail','Invalid credentials');
         }

@@ -30,7 +30,7 @@ class Test extends Controller
         $products = Product::findOrFail($request->input('product_id'));
         Cart::add($products->id,
             $products->productName,
-            1,
+            $request->input('quantity'),
             $products->productPrice,
         );
         return redirect()->route('home')->with('message', 'Product added to the cart');

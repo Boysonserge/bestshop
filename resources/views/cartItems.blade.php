@@ -10,7 +10,6 @@
 @livewireStyles
 <head><title>Items in cart</title></head>
 @include('inc.header')
-
 <body>
 <div class="overlay" data-overlay></div>
 
@@ -25,14 +24,15 @@
         @livewire('cart-items')
     </div>
 </main>
-
 @include('inc.footer')
 <script src="{{asset('js/script.js')}}"></script>
+
 <!--
 - ionicon link
 -->
+
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script  nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 @livewireScripts
 </body>
 
