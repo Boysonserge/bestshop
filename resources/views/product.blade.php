@@ -4,10 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="app-url" content="https://bestshoprwanda.com/">
+    <meta name="file-base-url" content="https://bestshoprwanda.com/public/">
+    <meta name="keywords" content="{{$openedProd->productName}}">
+
+    <meta property="og:title" content="{{$openedProd->productName}}" />
+    <meta property="og:type" content="og:product" />
+    <meta property="og:site_name" content="BEST SHOP RWANDA | The best Online Shopping Store in Rwanda for Online Shoppers." />
+    <meta property="og:url" content="{{$currentUrl}}" />
+    <meta property="og:image" content="{{asset($openedProd->productImage)}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{asset('images/logo/favicon.ico')}}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('css/style-prefix.css')}}">
     <link rel="stylesheet" href="{{asset('css/flowbite.css')}}">
+
 
 
     <style>
@@ -46,11 +56,11 @@
     <!-- left -->
     <div class="product-imgs">
         <div class="img-display">
-            <div class="img-showcase w-3">
-                <img src="{{asset($openedProd->productImage)}}" alt="">
+            <div class="img-showcase w-3" style='height: 500px;'>
+                <img style='width: 100%, height: 100%; object-fit: contain;' src="{{asset($openedProd->productImage)}}" alt="">
                 @foreach($openedOther as $other)
 
-                    <img class="" src="{{asset($other->imagePath)}}" alt="">
+                    <img style='width: 100%, height: 100%; object-fit: contain;' class="" src="{{asset($other->imagePath)}}" alt="">
                 @endforeach
 
 
@@ -127,7 +137,7 @@
                                 class="text-blue-600 bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Added to cart
                         </button>
-                    @else
+                @else
 
                 @endif
             </form>
@@ -168,14 +178,14 @@
 
     </div>
 
+
     <div class="social-links">
-        <p>Share to:</p>
-        <a href="#">
-            <ion-icon name="logo-facebook"></ion-icon>
-        </a>
-        <a href="#">
-            <ion-icon name="logo-whatsapp"></ion-icon>
-        </a>
+        <p>Share to hgh:</p>
+        @foreach($shared as $sha =>$value )
+            <a target="__blank" href="{{$value}}">
+                <ion-icon name="logo-{{$sha}}"></ion-icon>
+            </a>
+        @endforeach
     </div>
 </div>
 </div>
@@ -251,6 +261,8 @@
 -->
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<script src="{{ asset('js/share.js') }}"></script>
 @livewireScripts
 </body>
 

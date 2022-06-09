@@ -1,10 +1,14 @@
 <header>
+    <?php
+    $cats = \App\Models\Category::with('products')->take(5)->get();
 
+    ?>
     <div class="header-top">
 
         <div class="container">
 
             <ul class="header-social-container">
+
                 <li>
                     <a target="__blank" href="https://www.instagram.com/best_shop_ltd/" class="social-link">
                         <ion-icon name="logo-instagram"></ion-icon>
@@ -31,19 +35,19 @@
                 </p>
             </div>
 
-{{--            <div class="header-top-actions">--}}
-
-{{--                --}}
-
-{{--                <select name="language">--}}
+            {{--<div class="header-top-actions">
 
 
-{{--                    <option value="es-kiny">Kinyarwanda</option>--}}
-{{--                    <option value="en-US">English</option>--}}
 
-{{--                </select>--}}
+                <select name="language">
 
-{{--            </div>--}}
+
+                    <option value="es-kiny">Kinyarwanda</option>
+                    <option value="en-US">English</option>
+
+                </select>
+
+            </div>--}}
 
         </div>
 
@@ -54,27 +58,22 @@
         <div class="container">
 
             <a href="{{route('home')}}" class="header-logo">
-                <img style="width: 40%;display: block;" src="{{ asset('images/logo/logo-01.png') }}" alt="Best shop logo" width="150" height="76">
+                <img style="width: 40%;display: block;" src="{{ asset('images/logo/logo-01.png') }}"
+                     alt="Best shop logo" width="150" height="76">
             </a>
 
-            <div class="header-search-container">
 
-                <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
 
-                <button class="search-btn">
-                    <ion-icon name="search-outline"></ion-icon>
-                </button>
+                @livewire('search')
 
-            </div>
 
             <div class="header-user-actions">
                 <button class="action-btn">
-                    <a href="{{route('client/dashboard')}}"><ion-icon name="person-circle"></ion-icon></a>
+                    <a href="{{route('client/dashboard')}}">
+                        <ion-icon name="person-circle"></ion-icon>
+                    </a>
 
                 </button>
-
-
-
                 <a href="{{route('cart.fetch')}}" class="action-btn">
                     <ion-icon name="cart"></ion-icon>
                     <span class="count">{{\Gloudemans\Shoppingcart\Facades\Cart::content()->count()}}</span>
@@ -94,86 +93,32 @@
 
                 <li class="menu-category">
                     <a href="{{route('home')}}" class="menu-title">Home</a>
-                </li>
-
-
-
-                <li class="menu-category">
-                    <a href="" class="menu-title">Kitchen materials</a>
 
                 </li>
 
                 <li class="menu-category">
-                    <a href="#" class="menu-title">Coffee materials</a>
-
-                    <ul class="dropdown-list">
-
-                        <li class="dropdown-item">
-                            <a href="#">Dress & Frock</a>
-                        </li>
-
-                        <li class="dropdown-item">
-                            <a href="#">Earrings</a>
-                        </li>
-
-                        <li class="dropdown-item">
-                            <a href="#">Necklace</a>
-                        </li>
-
-                        <li class="dropdown-item">
-                            <a href="#">Makeup Kit</a>
-                        </li>
-
-                    </ul>
+                    <a href="" class="menu-title">Top products</a>
                 </li>
 
-                <li class="menu-category">
-                    <a href="#" class="menu-title">Butchery</a>
+                @foreach($cats as $cate)
 
-                    <ul class="dropdown-list">
+                    <li class="menu-category">
+                        <a href="#" class="menu-title">{{$cate->productCategory}}</a>
+                        @if(count($cate->products))
+                            <ul class="dropdown-list">
+                                @foreach($cate->products as $prods)
+                                    <li class="dropdown-item">
+                                        <a href="{{route('prodDetails', ['id' => $prods->productSlug])}}">{{$prods->productName}} </a>
 
-                        <li class="dropdown-item">
-                            <a href="#">Earrings</a>
-                        </li>
+                                    </li>
+                                @endforeach
 
-                        <li class="dropdown-item">
-                            <a href="#">Couple Rings</a>
-                        </li>
+                            </ul>
+                        @endif
 
-                        <li class="dropdown-item">
-                            <a href="#">Necklace</a>
-                        </li>
+                    </li>
+                @endforeach
 
-                        <li class="dropdown-item">
-                            <a href="#">Bracelets</a>
-                        </li>
-
-                    </ul>
-                </li>
-
-                <li class="menu-category">
-                    <a href="#" class="menu-title">Bakery</a>
-
-                    <ul class="dropdown-list">
-
-                        <li class="dropdown-item">
-                            <a href="#">Clothes Perfume</a>
-                        </li>
-
-                        <li class="dropdown-item">
-                            <a href="#">Deodorant</a>
-                        </li>
-
-                        <li class="dropdown-item">
-                            <a href="#">Flower Fragrance</a>
-                        </li>
-
-                        <li class="dropdown-item">
-                            <a href="#">Air Freshener</a>
-                        </li>
-
-                    </ul>
-                </li>
 
                 <li class="menu-category">
                     <a href="#" class="menu-title">Contact</a>
@@ -205,7 +150,6 @@
         </button>
 
 
-
         <button class="action-btn" data-mobile-menu-open-btn>
             <ion-icon name="grid-outline"></ion-icon>
         </button>
@@ -227,86 +171,92 @@
             <li class="menu-category">
                 <a href="#" class="menu-title">Home</a>
             </li>
+                @foreach($cats as $cate)
+                    <li class="menu-category">
 
-            <li class="menu-category">
+                        <button class="accordion-menu" data-accordion-btn>
+                            <p class="menu-title">{{$cate->productCategory}}</p>
+                            <div>
+                                <ion-icon name="add-outline" class="add-icon"></ion-icon>
+                                <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                            </div>
+                        </button>
 
-                <button class="accordion-menu" data-accordion-btn>
-                    <p class="menu-title">Kitchen materials</p>
-                    <div>
-                        <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                        <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                    </div>
-                </button>
+                        @if(count($cate->products))
 
-                <ul class="submenu-category-list" data-accordion>
+                            <ul class="submenu-category-list" data-accordion>
+                                @foreach($cate->products as $prods)
 
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">View all</a>
+                                    <li class="submenu-category">
+                                        <a href="{{route('prodDetails', ['id' => $prods->productSlug])}}"
+                                           class="submenu-title">{{$prods->productName}}</a>
+                                    </li>
+                                @endforeach
+
+                            </ul>
+                        @endif
                     </li>
+                @endforeach
 
-                </ul>
+                <li class="menu-category">
 
-            </li>
+                    <button class="accordion-menu" data-accordion-btn>
+                        <p class="menu-title">Coffee materials</p>
 
-            <li class="menu-category">
+                        <div>
+                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
+                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                        </div>
+                    </button>
 
-                <button class="accordion-menu" data-accordion-btn>
-                    <p class="menu-title">Coffee materials</p>
+                    <ul class="submenu-category-list" data-accordion>
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">View all</a>
+                        </li>
+                    </ul>
+                </li>
 
-                    <div>
-                        <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                        <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                    </div>
-                </button>
+                <li class="menu-category">
 
-                <ul class="submenu-category-list" data-accordion>
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">View all</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="menu-category">
-
-                <button class="accordion-menu" data-accordion-btn>
-                    <p class="menu-title">Butchery
+                    <button class="accordion-menu" data-accordion-btn>
+                        <p class="menu-title">Butchery
                         </p>
 
-                    <div>
-                        <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                        <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                    </div>
-                </button>
+                        <div>
+                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
+                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                        </div>
+                    </button>
 
-                <ul class="submenu-category-list" data-accordion>
+                    <ul class="submenu-category-list" data-accordion>
 
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">View all</a>
-                    </li>
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">View all</a>
+                        </li>
 
-                </ul>
+                    </ul>
 
-            </li>
+                </li>
 
-            <li class="menu-category">
+                <li class="menu-category">
 
-                <button class="accordion-menu" data-accordion-btn>
-                    <p class="menu-title">Bakery
+                    <button class="accordion-menu" data-accordion-btn>
+                        <p class="menu-title">Bakery
                         </p>
 
-                    <div>
-                        <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                        <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                    </div>
-                </button>
+                        <div>
+                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
+                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                        </div>
+                    </button>
 
-                <ul class="submenu-category-list" data-accordion>
+                    <ul class="submenu-category-list" data-accordion>
 
-                    <li class="submenu-category">
-                        <a href="#" class="submenu-title">View all</a>
-                    </li>
-                </ul>
-            </li>
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">View all</a>
+                        </li>
+                    </ul>
+                </li>
 
         </ul>
 

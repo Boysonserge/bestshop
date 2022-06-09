@@ -6,6 +6,7 @@ use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class Test extends Controller
 {
@@ -43,35 +44,14 @@ class Test extends Controller
 
     public function testAdd(Request $request)
     {
-        $validates = $request->validate([
-            'productName' => 'required|string',
-            'productCode' => 'required|integer',
-            'productSlug' => 'required',
-            'productPrice' => 'required|integer',
-            'productDescription' => 'required|string',
-            'productCategory' => 'required|string',
-            'productVideo' => 'required|string'
-        ]);
-        $pmame = $validates['productName'];
-        $count = Str::wordCount($pmame);
 
-        if ($count > 1) {
-            $this->productSlug = Str::slug($pmame);
-        } else {
-            $n = $pmame . " original";
-            $this->productSlug = Str::slug($n);
-        }
+        $file=$request->file('filename');
 
-
-        $prooo = Product::create([
-            'productName' => $validates['productName'],
-            'productCode' => "Prod" . uniqid(),
-            'productSlug' => $this->productSlug,
-            'productPrice' => $validates['productPrice'],
-            'productDescription' => $validates['productDescription'],
-            'productCategory' => $validates['productCategory'],
-            'productVideo' => $validates['productVideo'],
-
-        ]);
+        $img=Image::make($file);
+        $img->insert("images/watermark.png",'center',10,10);
+        $data = (string) Image::make($request->file('filename'))->encode('data-url');
+        $uni=uniqid();
+        $img->save(storage_path("app/photos/$uni.".$file->extension()),70);
+        return $uni.$file->extension();
     }
 }

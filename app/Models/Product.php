@@ -12,4 +12,12 @@ class Product extends Model
     use HasFactory,SoftDeletes;
     use HasTrixRichText;
     protected $guarded;
+
+    public function categories(){
+        return $this->belongsToMany(Category::class,'category_product');
+    }
+
+    public function colors(){
+        return $this->belongsToMany(Color::class,'color_product');
+    }
 }

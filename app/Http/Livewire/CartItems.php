@@ -22,11 +22,14 @@ class CartItems extends Component
 
 
     public function mount(){
-       $this->cartItems=Cart::content();
+       $cart=$this->cartItems=Cart::content();
+//       $this->quantity=$cart->qty;
 
     }
 
     public function updateCart(){
+        session('success','Product ordered successfully');
+        dd(33);
         Cart::update($this->rowId, $this->quantity);
     }
 

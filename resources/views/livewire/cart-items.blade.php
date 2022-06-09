@@ -1,4 +1,3 @@
-
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -39,7 +38,7 @@
                             {{$rowId}}
                         </td>
                         <td class="px-6 py-4 font-medium whitespace-nowrap">
-{{--                            <ion-icon name="trash-outline"></ion-icon>--}}
+                            {{--                            <ion-icon name="trash-outline"></ion-icon>--}}
                             <button wire:click="deleteCart('{{$carts->rowId}}')" class="bg-blue-700 text-white p-2 rounded-full">Remove</button>
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
@@ -56,11 +55,10 @@
 
                         <td class="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
                             {{number_format($carts->total)}}
-                            {{$subTotal}}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
 
-                              <livewire:update-cart :myCarts="$carts" :key="$carts->id" />
+                            <livewire:update-cart :myCarts="$carts" :key="$carts->id" />
                         </td>
 
                     </tr>

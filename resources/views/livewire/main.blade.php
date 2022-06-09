@@ -75,16 +75,12 @@
               - PRODUCT GRID
             -->
 
-            <div class="product-main">
 
-                <h2 class="title">New Products</h2>
 
 
                 @livewire('list-products')
 
 
-
-            </div>
 
             <!--
               - PRODUCT MINIMAL

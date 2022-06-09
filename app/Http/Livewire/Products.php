@@ -5,13 +5,16 @@ namespace App\Http\Livewire;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\OtherImages;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Livewire\Component;
 use App\Models\Product;
 use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
 use function Livewire\str;
+use function PHPUnit\Framework\isNan;
 
 class Products extends Component
 {
@@ -30,9 +33,9 @@ class Products extends Component
         $productOtherImage,
         $productCode,
         $productDescription,
-        $productCategory,
         $productVideo;
     public $allProducts;
+    public $productCategory=[];
     public $productSlug;
     public $allCategories;
     public $allColors;
@@ -45,11 +48,14 @@ class Products extends Component
 
     public $prodId;
 
+public $selected;
 
 
     public function mount(){
         $this->allCategories=Category::all();
         $this->allColors=Color::all();
+        $this->productCategory=["Coffee materials","hide"];
+
     }
 
 
@@ -68,10 +74,20 @@ class Products extends Component
     {
         $this->showFormVisible2 = true;
         $data = Product::find($id);
+        $this->selected=123;
         $this->productName = $data->productName;
         $this->productPrice = $data->productPrice;
-        $this->desc = $data->productCategory;
-        $this->productCategory = $data->productCategory;
+        $this->desc = $data->productDescription;
+        $this->productCategory=$data->categories()->get();
+        $cats="";
+        foreach ($this->productCategory as $pr => $value){
+            $cats .=$value->id.",";
+        }
+        $cats=substr($cats,0,-1);
+        $cats=explode(',',$cats);
+
+        $this->productCategory=$cats;
+
         $this->productVideo = $data->productVideo;
         $this->productDescription=$data->productDescription;
         $this->prodId = $data->id;
@@ -81,15 +97,6 @@ class Products extends Component
     public function updateProduct(){
         $categories="";
         $colors='';
-        if (gettype($this->productCategory)=="array"){
-            foreach ($this->productCategory as $cat=>$value){
-                $categories .=$value.",";
-            }
-        }elseif (gettype($this->productCategory)=="string"){
-            $categories=$this->productCategory;
-        }
-
-
 
         if (gettype($this->productColor)=="array"){
             foreach ($this->productColor as $color=>$value){
@@ -100,7 +107,6 @@ class Products extends Component
         }
 
 
-
         Product::where('id',$this->prodId)
             ->update([
                 'productName'=>$this->productName,
@@ -108,8 +114,11 @@ class Products extends Component
                 'productDescription'=>$this->productDescription,
                 'productVideo'=>$this->productVideo,
                 'productColor'=>$colors,
-                'productCategory'=>$categories
             ]);
+
+        $prod=Product::find($this->prodId);
+        $prod->categories()->sync($this->productCategory);
+
         session()->flash('message','Product updated');
         $this->showFormVisible2=false;
     }
@@ -128,33 +137,44 @@ class Products extends Component
         ]);
 
 
-        $prod=$this->productImage->store('photos');
+        $file=$validates['productImage'];
+        $img=Image::make($file);
+        $img->insert("images/watermark.png",'center',10,10);
+        $uni=uniqid();
+        $img->save(storage_path("app/photos/$uni.".$file->extension()),70);
+        $prod="photos/".$uni.".".$file->extension();
         $validates['productImage']=$prod;
         $prodCode=strtoupper("Prod-".uniqid());
-        $categories="";
         $colors='';
-        foreach ($validates['productCategory'] as $cat=>$value){
-            $categories .=$value.",";
-        }
+
         foreach ($validates['productColor'] as $color=>$value){
             $colors .=$value.",";
         }
 
-        $prooo=Product::create([
-            'productName'=>$validates['productName'],
-            'productPrice'=>$validates['productPrice'],
-            'productImage'=>$prod,
-            'productCode'=>$prodCode,
-            'productColor'=>$colors,
-            'productSlug'=>Str::slug($validates['productName']),
-            'productDescription'=>$validates['productDescription'],
-            'productVideo'=>$validates['productVideo'],
-            'productCategory'=>$categories
-        ]);
-        $p=$prooo->id;
+        $product = new Product();
+        $product->productName = $validates['productName'];
+        $product->productPrice = $validates['productPrice'];
+        $product->productImage = $prod;
+        $product->productCode = $prodCode;
+        $product->productColor = $colors;
+        $product->productSlug = Str::slug($validates['productName']);
+        $product->productDescription = $validates['productDescription'];
+        $product->productVideo = $validates['productVideo'];
+        $product->save();
+        $cats=$validates['productCategory'];
+        $product->categories()->attach($cats);
+
+
+        $p=$product->id;
 
         foreach ($this->productOtherImage as $item) {
-            $photo=$item->store('others');
+            $file=$item;
+            $img=Image::make($file);
+            $img->insert("images/watermark.png",'center',10,10);
+            $uni=uniqid();
+            $img->save(storage_path("app/others/$uni.".$file->extension()),70);
+            $prod="others/".$uni.".".$file->extension();
+            $photo=$prod;
             OtherImages::create([
                 'product_id'=>$p,
                 'imagePath'=>$photo
@@ -169,8 +189,10 @@ class Products extends Component
 
 
     public function deleteProduct($id){
-        Product::where('id',$id)
-            ->delete();
+        $prod=Product::find($id);
+        $prod->categories()->detach();
+        $prod->delete();
+
         session()->flash('message','Product deleted');
     }
 

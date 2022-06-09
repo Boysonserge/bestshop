@@ -11,4 +11,9 @@ class Color extends Model
     use HasFactory;
     use SoftDeletes;
     protected $guarded;
+
+    public function products(){
+        return $this->belongsToMany(Product::class,'color_product');
+    }
+
 }

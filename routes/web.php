@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ckeditorController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShowProducts;
 use App\Http\Controllers\Test;
 use App\Http\Middleware\EnsureValidClient;
@@ -22,16 +25,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('prodDetails/{id}',[ShowProducts::class,'getProducts'])->name('prodDetails');
+Route::get('prodDetails/{id}', [ShowProducts::class, 'getProducts'])->name('prodDetails');
 
+Route::post('cart/store', [Test::class, 'store'])->name('cart/store');
 
-Route::post('cart/store',[Test::class,'store'])->name('cart/store');
-Route::delete('cart/delete/{rowId}',[Test::class,'deleteCart'])->name('cart/delete');
-
+Route::delete('cart/delete/{rowId}', [Test::class, 'deleteCart'])->name('cart/delete');
 
 Route::middleware([
     'auth:sanctum',
@@ -54,38 +57,30 @@ Route::middleware([
 
 });
 
-
-
-
-
-
-Route::get('cart.fetch',function (){
+Route::get('cart.fetch', function () {
     return view('cartItems');
 })->name('cart.fetch');
 
 
-
-Route::get('user/login',[AuthController::class,'loginPage'])->middleware(IsLogged::class);
-Route::get('client/dashboard',function (){
-   return view('clientdashboard');
+Route::get('user/login', [AuthController::class, 'loginPage'])->middleware(IsLogged::class);
+Route::get('client/dashboard', function () {
+    return view('clientdashboard');
 })->name('client/dashboard')
     ->middleware(EnsureValidClient::class);
 
 
-
-
-
-
-
-
-
-
 Route::get('migrate', function () {
     Artisan::call('migrate');
-    return 'Database migration success.';
+    return Artisan::output();
 });
 
 Route::get('storage', function () {
-    Artisan::call('storage:link');
-    return 'Link created success.';
+     Artisan::call('storage:link');
+    return Artisan::output();
 });
+
+
+Route::get('ck', [ckeditorController::class, 'index']);
+Route::get('category/{category_slug}', [CategoryController::class, 'index'])
+->name('category');
+Route::post('search',[SearchController::class,'search'])->name('search');

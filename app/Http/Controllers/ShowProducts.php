@@ -6,10 +6,12 @@ use App\Models\OtherImages;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Jorenvh\Share\Share;
 
 class ShowProducts extends Controller
 {
     public $openedOther=[];
+
 
     //
     public function getProducts($id){
@@ -18,17 +20,32 @@ class ShowProducts extends Controller
             ->where('products.productSlug',$id)
             ->get();
 
-        $related=DB::table('products')
-            ->where('products.productSlug','!=',$id)
+        $related=Product::where('products.productSlug','!=',$id)
             ->inRandomOrder()
             ->take(4)
             ->get();
+        $openedProd=Product::where('productSlug',$id)
+            ->first();
+
+
+        $shre=(new \Jorenvh\Share\Share)->currentPage($openedProd->productName)
+            ->facebook()
+            ->twitter()
+            ->whatsapp()
+            ->getRawLinks();
 
 
 
-
-
-        return view('product')->with('openedProd',Product::where('productSlug',$id)
-                ->first())->with(['openedOther'=>$openedOther,'related'=>$related]);
+        return view('product')
+            ->with('openedProd',Product::where('productSlug',$id)
+                ->first())->with([
+                    'openedOther'=>$openedOther,
+                'related'=>$related,
+                'shared'=> (new \Jorenvh\Share\Share)->currentPage($openedProd->productName)
+                    ->facebook()
+                    ->twitter()
+                    ->whatsapp()
+                    ->getRawLinks(),
+                'currentUrl'=> url()->current()]);
     }
 }

@@ -30,7 +30,8 @@
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
     <style>
         ion-icon {
             --ionicon-stroke-width: 32px;
@@ -51,8 +52,9 @@
 @include('inc.header');
 
 <!--
-  - MAIN
--->
+      - MAIN
+    -->
+
 
 <main>
 
@@ -120,7 +122,7 @@
                             starting from &dollar; <b>29.99</b>
                         </p>
 
-                        <a href="index.php" class="banner-btn">Shop now</a>
+                        <a href="" class="banner-btn">Shop now</a>
 
                     </div>
                 </div>
@@ -135,90 +137,26 @@
     <div class="category">
 
         <div class="container">
-
             <div class="category-item-container has-scrollbar">
+                <?php     $cats = \App\Models\Category::with('products')->take(5)->get();
+                ?>
 
+                @foreach($cats as $cate)
+                        <div class="category-item">
+                            <div class="category-img-box">
+                                <img src="{{asset($cate->category_icon)}}" alt="{{$cate->productCategory}}" width="30">
+                            </div>
 
-
-                <div class="category-item">
-
-                    <div class="category-img-box">
-                        <img src="{{asset('images/icons/kitchen.svg')}}" alt="kitchen" width="30">
-                    </div>
-
-                    <div class="category-content-box">
-
-                        <div class="category-content-flex">
-                            <h3 class="category-item-title">Kitchen materials</h3>
-
-                            <p class="category-item-amount">(35)</p>
+                            <div class="category-content-box">
+                                <div class="category-content-flex">
+                                    <h3 class="category-item-title">{{$cate->productCategory}}</h3>
+                                    <p class="category-item-amount">({{count($cate->products)}})</p>
+                                </div>
+                                <a href="#" class="category-btn">Show all</a>
+                            </div>
                         </div>
+                @endforeach
 
-                        <a href="#" class="category-btn">Show all</a>
-
-                    </div>
-
-                </div>
-
-                <div class="category-item">
-
-                    <div class="category-img-box">
-                        <img src="images/icons/coffee.svg" alt="coffee" width="30">
-                    </div>
-
-                    <div class="category-content-box">
-
-                        <div class="category-content-flex">
-                            <h3 class="category-item-title">Coffee materials</h3>
-
-                            <p class="category-item-amount">(16)</p>
-                        </div>
-
-                        <a href="#" class="category-btn">Show all</a>
-
-                    </div>
-
-                </div>
-
-                <div class="category-item">
-
-                    <div class="category-img-box">
-                        <img src="images/icons/Butchery.svg" alt="Butchery" width="30">
-                    </div>
-
-                    <div class="category-content-box">
-
-                        <div class="category-content-flex">
-                            <h3 class="category-item-title">Butchery</h3>
-
-                            <p class="category-item-amount">(27)</p>
-                        </div>
-
-                        <a href="#" class="category-btn">Show all</a>
-
-                    </div>
-
-                </div>
-
-                <div class="category-item">
-
-                    <div class="category-img-box">
-                        <img src="images/icons/Bakery.svg" alt="Bakery" width="30">
-                    </div>
-
-                    <div class="category-content-box">
-
-                        <div class="category-content-flex">
-                            <h3 class="category-item-title">Bakery</h3>
-
-                            <p class="category-item-amount">(39)</p>
-                        </div>
-
-                        <a href="#" class="category-btn">Show all</a>
-
-                    </div>
-
-                </div>
 
             </div>
 
@@ -252,7 +190,8 @@
 
                     <div class="testimonial-card">
 
-                        <img src="images/testimonial-1.jpg" alt="alan doe" class="testimonial-banner" width="80" height="80">
+                        <img src="images/testimonial-1.jpg" alt="alan doe" class="testimonial-banner" width="80"
+                             height="80">
 
                         <p class="testimonial-name">Alan Doe</p>
 
@@ -391,8 +330,7 @@
 <!--
   - FOOTER
 -->
-<script src="https://apps.elfsight.com/p/platform.js" defer></script>
-<div class="elfsight-app-82d77462-b66c-4e73-a65c-6a4b5a671b65"></div>
+
 
 @include('inc.footer')
 
@@ -408,6 +346,9 @@
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 @livewireScripts
+
+<script src="https://apps.elfsight.com/p/platform.js" defer></script>
+<div class="elfsight-app-82d77462-b66c-4e73-a65c-6a4b5a671b65"></div>
 </body>
 
 </html>

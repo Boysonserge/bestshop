@@ -1,8 +1,8 @@
-<div>
-    @trixassets
+<div class=" p-6 bg-white overflow-x-auto  shadow-xl sm:rounded-lg">
+
     {{--Update modal--}}
     <div class="flex items-center justify-between mt-4 pb-4">
-        <div><strong>Update product info:</strong></div>
+        <div><strong>Available products:</strong></div>
 
 
         <x-jet-dialog-modal wire:model="showFormVisible2" wire:ignore.self>
@@ -15,7 +15,7 @@
                     <div class="mb-6">
                         <label for="productName"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
-                            productName2 {{$prodId}}</label>
+                            productName </label>
                         <input wire:model="productName" type="text" id="productName"
                                class="bg-gray-50 border border-gray-300 text-gray-900
                                text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
@@ -52,14 +52,15 @@
                         <label for="productCategory"
                                class="block mb-2 text-sm font-medium
                                 text-gray-900 dark:text-gray-300">Your productCategory (<small class="text-blue-600">Hano
-                                ukanda CTR ubundi
-                                ugahitamo categories zirenze imwe</small>)</label>
+                                ukanda CTR ubundi ugahitamo categories zirenze imwe</small>)</label>
 
                         <select multiple wire:model="productCategory" id="productCategory"
                                 class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
+
                             @foreach($allCategories as $cat)
-                                <option value="{{$cat->productCategory}}">{{$cat->productCategory}}</option>
+                                <option
+                                    value="{{$cat->id}}">{{$cat->productCategory}}</option>
                             @endforeach
 
 
@@ -169,8 +170,11 @@
                             productDescription</label>
 
                         <textarea wire:model="productDescription" name="" id="productDescription" cols="10" rows="4"
-                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  class="editor bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   required></textarea>
+                        <textarea name="" id="editor" >
+            test
+        </textarea>
 
 
                         @error('productDescription') <span class="error text-red-500">{{ $message }}</span> @enderror
@@ -187,7 +191,7 @@
                                 class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option hidden selected>Choose a country</option>
                             @foreach($allCategories as $cat)
-                                <option value="{{$cat->productCategory}}">{{$cat->productCategory}}</option>
+                                <option value="{{$cat->id}}">{{$cat->productCategory}}</option>
                             @endforeach
                         </select>
                         @error('productCategory') <span class="error text-red-500">{{ $message }}</span> @enderror
@@ -282,7 +286,7 @@
 
 
                 <th scope="col" class="px-6 py-3">
-                    Category
+                    Categories
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Price (rwf)
@@ -306,7 +310,9 @@
                         {{$prod->productName}}
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
-                        {{$prod->productCategory}}
+                        @foreach($prod->categories as $cats)
+                            {{$cats->productCategory}},
+                        @endforeach
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
                     {{number_format($prod->productPrice)}}
