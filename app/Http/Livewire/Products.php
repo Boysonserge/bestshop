@@ -16,7 +16,7 @@ use Livewire\WithPagination;
 use function Livewire\str;
 use function PHPUnit\Framework\isNan;
 
-class Products extends Component implements
+class Products extends Component
 {
     use WithFileUploads;
     use WithPagination;
