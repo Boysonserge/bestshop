@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="{{asset('css/style-prefix.css')}}">
     <link rel="stylesheet" href="{{asset('css/flowbite.css')}}">
 
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 
 
     <style>
@@ -57,10 +61,10 @@
     <div class="product-imgs">
         <div class="img-display">
             <div class="img-showcase w-3" style='height: 500px;'>
-                <img style='width: 100%, height: 100%; object-fit: contain;' src="{{asset($openedProd->productImage)}}" alt="">
+                <img style='width: 100%; height: 100%; object-fit: contain;' src="{{asset($openedProd->productImage)}}" alt="">
                 @foreach($openedOther as $other)
 
-                    <img style='width: 100%, height: 100%; object-fit: contain;' class="" src="{{asset($other->imagePath)}}" alt="">
+                    <img style='width: 100%; height: 100%; object-fit: contain;' class="" src="{{asset($other->imagePath)}}" alt="">
                 @endforeach
 
 
@@ -71,14 +75,13 @@
 
             <div class="img-item">
                 <a href="#" data-id='1'>
-                    <img src="{{asset($openedProd->productImage)}}" alt="">
+                    <img style="" src="{{asset($openedProd->productImage)}}" alt="">
                 </a>
             </div>
             @foreach($openedOther as $other=>$key)
 
                 <div class="img-item">
                     <a href="#" data-id="{{$other+2}}">
-
                         <img src="{{asset($key->imagePath)}}" alt="">
                     </a>
                 </div>
@@ -90,7 +93,6 @@
 
     <!-- Right -->
     <div class="product-content">
-
         <p class="text-3xl uppercase font-extrabold dark:text-white">{{$openedProd->productName}}</p>
         <div class="product-rating">
             <ion-icon name="star"></ion-icon>
@@ -113,40 +115,23 @@
             <p>{{$openedProd->productDescription}}.</p>
 
 
-            {{--                        <ul>--}}
-            {{--                            <li>Colors: <span>Black</span></li>--}}
-            {{--                            <li>Available: <span>In stock</span></li>--}}
-            {{--                            <li>Category: <span>Cofefe materials</span></li>--}}
+                                    <ul>
+                                        <li>Colors: @foreach($openedProd->colors as $color)
+                                                <span>{{$color->colorName}},</span>
+                                            @endforeach</li>
+                                        <li>Available: <span>In stock</span></li>
+                                        <li>Categories: @foreach($openedProd->categories as $cats)
+                                                <span>{{$cats->productCategory}},</span>
+                                            @endforeach</li>
 
-            {{--                        </ul>--}}
+
+                                    </ul>
         </div>
 
-        <div class="purchase-info">
-
-            <form action="{{route('cart/store')}}" method="post">
-                @csrf
-                <div class="flex justify-center">
-                    <?php
-                    $cart = Gloudemans\Shoppingcart\Facades\Cart::content()?>
-                    <input value="1" min="1" type="number" id="email"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="name@flowbite.com">
-
-                    @if($cart->where('id',$openedProd->id)->count())
-                        <button disabled
-                                class="text-blue-600 bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Added to cart
-                        </button>
-                @else
-
-                @endif
-            </form>
-        </div>
+        @livewire('product-view',['id'=>$openedProd->id])
 
 
-        <button class="flex space-x-4 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="defaultModal">
-            <ion-icon name="videocam" class="w-4 h-4 mr-2 -ml-1"></ion-icon>  Show video
-        </button>
+
 
 
         <!-- Main modal -->
@@ -175,18 +160,18 @@
             </div>
         </div>
 
-
+        <div class="social-links">
+            <p>Share to :</p>
+            @foreach($shared as $sha =>$value )
+                <a target="__blank" href="{{$value}}">
+                    <ion-icon name="logo-{{$sha}}"></ion-icon>
+                </a>
+            @endforeach
+        </div>
     </div>
 
 
-    <div class="social-links">
-        <p>Share to hgh:</p>
-        @foreach($shared as $sha =>$value )
-            <a target="__blank" href="{{$value}}">
-                <ion-icon name="logo-{{$sha}}"></ion-icon>
-            </a>
-        @endforeach
-    </div>
+
 </div>
 </div>
 </div>
@@ -255,6 +240,13 @@
 <script src="{{asset('js/script.js')}}"></script>
 <script src="{{asset('js/detail.js')}}"></script>
 <script src="{{asset('js/flowbite.js')}}"></script>
+
+<script src="{{ mix('js/app.js') }}" defer></script>
+<!--
+  - ionicon link
+-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 <!--
 - ionicon link

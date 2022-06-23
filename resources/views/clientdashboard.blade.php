@@ -16,6 +16,8 @@
     <div class="bg-blue-50 py-12 px-6 flex justify-center mb-6">
         <div class="text-blue-500 py-12 px-6 text-center">
             <h1 class="text-2xl font-extrabold"> Client panel</h1>
+
+            {{\Illuminate\Support\Facades\Auth::check()}}
             <hr>
         </div>
     </div>

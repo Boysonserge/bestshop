@@ -1,7 +1,6 @@
 <header>
     <?php
     $cats = \App\Models\Category::with('products')->take(5)->get();
-
     ?>
     <div class="header-top">
 
@@ -96,9 +95,7 @@
 
                 </li>
 
-                <li class="menu-category">
-                    <a href="" class="menu-title">Top products</a>
-                </li>
+
 
                 @foreach($cats as $cate)
 
@@ -123,11 +120,6 @@
                 <li class="menu-category">
                     <a href="#" class="menu-title">Contact</a>
                 </li>
-
-                <li class="menu-category">
-                    <a href="#" class="menu-title">Hot Offers</a>
-                </li>
-
             </ul>
 
         </div>
@@ -198,65 +190,7 @@
                     </li>
                 @endforeach
 
-                <li class="menu-category">
 
-                    <button class="accordion-menu" data-accordion-btn>
-                        <p class="menu-title">Coffee materials</p>
-
-                        <div>
-                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                        </div>
-                    </button>
-
-                    <ul class="submenu-category-list" data-accordion>
-                        <li class="submenu-category">
-                            <a href="#" class="submenu-title">View all</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="menu-category">
-
-                    <button class="accordion-menu" data-accordion-btn>
-                        <p class="menu-title">Butchery
-                        </p>
-
-                        <div>
-                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                        </div>
-                    </button>
-
-                    <ul class="submenu-category-list" data-accordion>
-
-                        <li class="submenu-category">
-                            <a href="#" class="submenu-title">View all</a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <li class="menu-category">
-
-                    <button class="accordion-menu" data-accordion-btn>
-                        <p class="menu-title">Bakery
-                        </p>
-
-                        <div>
-                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                        </div>
-                    </button>
-
-                    <ul class="submenu-category-list" data-accordion>
-
-                        <li class="submenu-category">
-                            <a href="#" class="submenu-title">View all</a>
-                        </li>
-                    </ul>
-                </li>
 
         </ul>
 

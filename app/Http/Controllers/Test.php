@@ -44,14 +44,9 @@ class Test extends Controller
 
     public function testAdd(Request $request)
     {
-
-        $file=$request->file('filename');
-
-        $img=Image::make($file);
+        $img=Image::make($request->file('filename'));
         $img->insert("images/watermark.png",'center',10,10);
-        $data = (string) Image::make($request->file('filename'))->encode('data-url');
-        $uni=uniqid();
-        $img->save(storage_path("app/photos/$uni.".$file->extension()),70);
-        return $uni.$file->extension();
+        $img->save(public_path('images/new-image.png'));
+        return "saved";
     }
 }

@@ -84,3 +84,7 @@ Route::get('ck', [ckeditorController::class, 'index']);
 Route::get('category/{category_slug}', [CategoryController::class, 'index'])
 ->name('category');
 Route::post('search',[SearchController::class,'search'])->name('search');
+
+
+
+require_once __DIR__ .'/jetstream.php';

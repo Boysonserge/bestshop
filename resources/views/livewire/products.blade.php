@@ -55,7 +55,10 @@
                                 ukanda CTR ubundi ugahitamo categories zirenze imwe</small>)</label>
 
                         <select multiple wire:model="productCategory" id="productCategory"
-                                class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300
+                                 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500
+                                 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                                 dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
 
                             @foreach($allCategories as $cat)
@@ -78,9 +81,9 @@
 
                         <select multiple wire:model="productColor" id="productColor"
                                 class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option hidden selected>Choose a color</option>
+
                             @foreach($allColors as $color)
-                                <option value="{{$color->colorName}}">{{$color->colorName}}</option>
+                                <option value="{{$color->id}}">{{$color->colorName}}</option>
                             @endforeach
                         </select>
                         @error('productCategory') <span class="error text-red-500">{{ $message }}</span> @enderror
@@ -172,9 +175,7 @@
                         <textarea wire:model="productDescription" name="" id="productDescription" cols="10" rows="4"
                                   class="editor bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   required></textarea>
-                        <textarea name="" id="editor" >
-            test
-        </textarea>
+
 
 
                         @error('productDescription') <span class="error text-red-500">{{ $message }}</span> @enderror
@@ -208,7 +209,7 @@
                                 class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option hidden selected>Choose a color</option>
                             @foreach($allColors as $color)
-                                <option value="{{$color->colorName}}">{{$color->colorName}}</option>
+                                <option value="{{$color->id}}">{{$color->colorName}}</option>
                             @endforeach
                         </select>
                         @error('productCategory') <span class="error text-red-500">{{ $message }}</span> @enderror
@@ -321,7 +322,7 @@
                     <td class="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
 
 
-                        <a wire:click.prevent="deleteProduct({{$prod->id}})"
+                        <a  wire:click.prevent="deleteProduct({{$prod->id}})"
                            class="bg-red-600 hover:bg-red-700 text-white cursor-pointer font-bold py-2 px-4 rounded">
                             <ion-icon name="trash-outline"></ion-icon>                        </a>
 

@@ -1,12 +1,10 @@
 <div class="product-main">
-
+    <div wire:loading class="loading">Loading&#8230;</div>
     <h2 class="title">New Products</h2>
     <div class="product-grid">
-
         @foreach($myProds as $pro)
-            <div class="showcase">
+            <div wire:key="{{ $loop->index }}" class="showcase" >
                 <div class="showcase-banner">
-
                     <img src="{{$pro->productImage}}" alt="Coffe machine" class="product-img default w-5">
                     <a href="{{route('prodDetails', ['id' => $pro->productSlug])}}"><img src="{{$pro->productImage}}"
                                                                                          alt="Coffe machine"
@@ -14,37 +12,44 @@
                                                                                          class="product-img hover"></a>
 
                     <p class="showcase-badge">15%</p>
-
                     <div class="showcase-actions">
-
                         <button class="btn-action">
                             <ion-icon name="cart"></ion-icon>
                         </button>
-
-
                     </div>
-
                 </div>
                 <div class="showcase-content">
                     <a href="#" class="showcase-category">.. </a>
                     <a href="{{route('prodDetails', ['id' => $pro->productSlug])}}">
                         <h3 class="showcase-title">{{$pro->productName}}</h3>
                     </a>
-
-                    <div class="showcase-rating">
+                    {{--<div class="showcase-rating">
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star-outline"></ion-icon>
                         <ion-icon name="star-outline"></ion-icon>
-                    </div>
-
+                    </div>--}}
                     <div class="price-box">
                         <p class="price">{{number_format($pro->productPrice)}} rwf</p>
                         <del>{{number_format(($pro->productPrice)+500)}} rwf</del>
-                    </div>
-                    <form wire:submit.prevent="addCart({{$pro->id}})">
 
+                    </div>
+                    <?php
+                    $cart = Gloudemans\Shoppingcart\Facades\Cart::content()?>
+                    @if($cart->where('id',$pro->id)->count())
+                        <a href="{{route('cart.fetch')}}" class="bg-blue-100 px-6 w-full rounded-full mb-4">Added to cart</a>
+                    @else
+                        <button wire:click="createModal({{$pro->id}})"
+                                type="submit" class="mb-6 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
+                            focus:outline-none  font-medium rounded-lg text-sm sm:w-auto
+                            px-5 py-2.5 text-center ">
+                            Add to cart <br><small>(Hitamo igicuruzwa) {{$test}}</small></button>
+
+                    @endif
+
+
+                   {{-- <form wire:submit.prevent="addCart({{$pro->id}})">
                         <input wire:model.lazy="cartQuantity" min="1" type="number" name="quantity" id="quantity"
                                class="bg-gray-50 border border-gray-300 text-gray-900
                             text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
@@ -64,7 +69,7 @@
                         @endif
 
 
-                    </form>
+                    </form>--}}
                 </div>
 
 
@@ -94,6 +99,81 @@
 
 {{--    {{ $myProds->links() }}--}}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {{--Modal for add to cart--}}
+    <x-jet-dialog-modal wire:model="showModal" wire:ignore.self>
+        <x-slot name="title">
+            {{ $title }}
+
+        </x-slot>
+
+
+
+        <x-slot name="content">
+            <form>
+                <div class="mb-6">
+                    <label for="productName"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Choose preferred color</label>
+                    <div class="flex flex-wrap">
+                        @if($showModal)
+                            @foreach($selectedProd->colors as $ss)
+
+                                <div class="flex items-center mr-4">
+                                    <input id="{{$ss->colorName}}-radio" type="radio" value="" name="colored-radio" class="w-4 h-4 text-{{$ss->colorName}}-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="{{$ss->colorName}}-radio" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{$ss->colorName}}</label>
+                                </div>
+                            @endforeach
+                        @endif
+
+                    </div>
+                    @error('color') <span class="error text-red-500">{{ $message }}</span> @enderror
+                </div>
+                <div class="mb-6">
+                    <label for="productName"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                        Quantity (umubare ushaka) </label>
+                    <input min="1" wire:model="cartQuantity" type="number" id="productName"
+                           class="bg-gray-50 border border-gray-300 text-gray-900
+                               text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
+                               block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
+                               dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                               dark:focus:border-blue-500" placeholder="Product name" required>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold
+                    mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                        Total price(<small>ayo uzishyura yose</small>): <b>{{number_format($totalCart)}}</b>
+                    </span>
+                    @error('cartQuantity') <span class="error text-red-500">{{ $message }}</span> @enderror
+                </div>
+            </form>
+        </x-slot>
+        <x-slot name="footer">
+
+            <div wire:loading.remove>
+                <x-jet-button wire:click.prevent="addCart({{$prodId}})">
+                    {{ __('Confirm (Emeza)') }}
+                </x-jet-button>
+            </div>
+            <x-jet-secondary-button wire:click="$set('showModal', false)" wire:loading.attr="disabled">
+                {{ __('Close') }}
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-jet-dialog-modal>
 </div>
 
 

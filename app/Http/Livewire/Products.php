@@ -16,7 +16,7 @@ use Livewire\WithPagination;
 use function Livewire\str;
 use function PHPUnit\Framework\isNan;
 
-class Products extends Component
+class Products extends Component implements
 {
     use WithFileUploads;
     use WithPagination;
@@ -40,7 +40,7 @@ class Products extends Component
     public $allCategories;
     public $allColors;
 
-    public $productColor;
+    public $productColor=[];
     public $desc;
 
     public $testValue = 1;
@@ -54,7 +54,6 @@ public $selected;
     public function mount(){
         $this->allCategories=Category::all();
         $this->allColors=Color::all();
-        $this->productCategory=["Coffee materials","hide"];
 
     }
 
@@ -98,26 +97,17 @@ public $selected;
         $categories="";
         $colors='';
 
-        if (gettype($this->productColor)=="array"){
-            foreach ($this->productColor as $color=>$value){
-                $colors .=$value.",";
-            }
-        }elseif (gettype($this->productColor)=="string"){
-            $colors=$this->productColor;
-        }
-
-
         Product::where('id',$this->prodId)
             ->update([
                 'productName'=>$this->productName,
                 'productPrice'=>$this->productPrice,
                 'productDescription'=>$this->productDescription,
                 'productVideo'=>$this->productVideo,
-                'productColor'=>$colors,
             ]);
 
         $prod=Product::find($this->prodId);
         $prod->categories()->sync($this->productCategory);
+        $prod->colors()->sync($this->productColor);
 
         session()->flash('message','Product updated');
         $this->showFormVisible2=false;
@@ -131,38 +121,43 @@ public $selected;
             'productPrice'=>'required|integer',
             'productImage'=>'image|max:10240',
             'productDescription'=>'required|string|max:3000',
-            'productVideo'=>'string',
+            'productVideo'=>'',
             'productCategory'=>'array',
             'productColor'=>'array'
         ]);
 
-
         $file=$validates['productImage'];
+
         $img=Image::make($file);
-        $img->insert("images/watermark.png",'center',10,10);
+        $img->resize(800, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $water=Image::make('images/watermark.png');
+        $water->resize(800, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->insert($water,'center',10,10);
         $uni=uniqid();
         $img->save(storage_path("app/photos/$uni.".$file->extension()),70);
         $prod="photos/".$uni.".".$file->extension();
         $validates['productImage']=$prod;
         $prodCode=strtoupper("Prod-".uniqid());
-        $colors='';
 
-        foreach ($validates['productColor'] as $color=>$value){
-            $colors .=$value.",";
-        }
 
         $product = new Product();
         $product->productName = $validates['productName'];
         $product->productPrice = $validates['productPrice'];
         $product->productImage = $prod;
         $product->productCode = $prodCode;
-        $product->productColor = $colors;
         $product->productSlug = Str::slug($validates['productName']);
         $product->productDescription = $validates['productDescription'];
         $product->productVideo = $validates['productVideo'];
         $product->save();
         $cats=$validates['productCategory'];
+        $prodColors=$validates['productColor'];
+
         $product->categories()->attach($cats);
+        $product->colors()->attach($prodColors);
 
 
         $p=$product->id;
@@ -170,7 +165,14 @@ public $selected;
         foreach ($this->productOtherImage as $item) {
             $file=$item;
             $img=Image::make($file);
-            $img->insert("images/watermark.png",'center',10,10);
+            $img->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $water=Image::make('images/watermark.png');
+            $water->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->insert($water,'center',10,10);
             $uni=uniqid();
             $img->save(storage_path("app/others/$uni.".$file->extension()),70);
             $prod="others/".$uni.".".$file->extension();
